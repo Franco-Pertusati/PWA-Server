@@ -12,8 +12,13 @@ const vapidKeys = {
 };
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: 'https://pwa-test-mcb4.vercel.app' }));
 app.use(bodyParser.json());
+
+// Endpoint para probar el servidor
+app.get('/health', (req, res) => {
+  res.status(200).json({ message: 'Server is running!' });
+});
 
 // Endpoint para registrar suscripciones
 const subscriptions = []; // Array para almacenar las suscripciones
@@ -37,4 +42,9 @@ app.post('/send-notification', (req, res) => {
   });
 
   res.status(200).json({ message: 'Notifications sent successfully!' });
+});
+
+// Inicio del servidor
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
